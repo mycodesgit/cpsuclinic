@@ -18,6 +18,7 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-body">
+                    
                     <div>
                         <table id="example1" class="table table-hover">
                             <thead>
@@ -26,28 +27,40 @@
                                     <th>Age</th>
                                     <th>Sex</th>
                                     <th>Civil Status</th>
-                                    <th>Action</th>
+                                    @if($id == 1)
+                                    <th>Remarks</th>
+                                    @endif
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($patients as $p)
-                                    <tr>
-                                        <td>{{ $p->lname }} {{ $p->ext }} {{ $p->fname }} {{ $p->mname }}</td>
-                                        <td>{{ $p->age }}</td>
-                                        <td>{{ $p->sex }}</td>
-                                        <td>{{ $p->c_status}}</td>
-                                        <td>
-                                            <a href="{{ route('moreInfo', ['id' => $p->category, 'mid' => $p->id]) }}" class="btn btn-info btn-sm" title="More Info">
-                                                <i class="fas fa-exclamation-circle"></i> 
-                                            </a>
-                                            <a href="{{ route('peheReport', $p->id) }}" target="_blank" class="btn btn-warning btn-sm" title="Pre-Entrance Health Examination Reporto">
-                                                <i class="fas fa-file-pdf"></i> 
-                                            </a>
-                                            <button class="btn btn-danger btn-sm" title="Delete">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                <tr id="tr-{{ $p->id }}">
+                                    <td class="text-uppercase">
+                                        {{ $p->lname }} {{ $p->ext }} {{ $p->fname }} {{ $p->ext_name }} {{ $p->mname }}
+                                    </td>                                          
+                                    <td>{{ $p->age }}</td>
+                                    <td>{{ $p->sex }}</td>
+                                    <td>{{ $p->c_status}}</td>
+                                    @if($id == 1)
+                                    <td>
+                                        {!! ($p->pexam_remarks == 1) ? '<span class="badge badge-success">Fit for enrollment</span>' : '' !!}
+                                        {!! ($p->pexam_remarks == 2) ? '<span class="badge badge-danger"> Not fit for enrollment</span>' : '' !!}
+                                        {!! ($p->pexam_remarks == 3) ? '<span class="badge badge-warning" data-toggle="tooltip" title="'.$p->pend_reason.'">Pending</span>' : '' !!}
+                                    </td>
+                                    @endif
+                                    <td class="text-center">
+                                        <a href="{{ route('moreInfo', ['id' => $p->category, 'mid' => $p->id]) }}" class="btn btn-info btn-sm" title="More Info">
+                                            <i class="fas fa-exclamation-circle"></i> 
+                                        </a>
+                                        <a href="{{ route('reportsRead', $p->id) }}" class="btn btn-warning btn-sm" title="Pre-Entrance Health Examination Report">
+                                            <i class="fas fa-file-pdf"></i> 
+                                        </a>
+                                        <button class="btn btn-danger btn-sm patient-delete" data-id="{{ $p->id }}" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                             <tbody>
@@ -59,5 +72,9 @@
         </div>
     </div>
 </div>
-
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 @endsection

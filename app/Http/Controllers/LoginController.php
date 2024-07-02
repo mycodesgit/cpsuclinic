@@ -15,7 +15,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'username'=>'required',
-            'password'=>'required|min:5|max:12'
+            'password'=>'required'
         ]);
 
         $validated=auth()->attempt([

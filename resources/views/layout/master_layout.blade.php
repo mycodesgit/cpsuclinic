@@ -25,6 +25,11 @@
     <link rel="stylesheet" href="{{ asset('style/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('style/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('style/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+        
+
     <!-- Logo  -->
     <link rel="shortcut icon" type="" href="{{ asset('style/dist/img/CPSU_L.png') }}">
 
@@ -130,10 +135,25 @@
     <script src="{{ asset('style/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
     <script src="{{ asset('js/basic/table.js') }}"></script>
-    <script src="{{ asset('js/ajax/collegecourse.js') }}"></script>
+
+    <!-- ChartJS -->
+    <script src="style/plugins/chart.js/Chart.min.js"></script>
 
     <script src="{{ asset('js/validation/patientValidation.js') }}"></script>
 
+    <!-- Select2 -->
+    <script src="{{ asset('style/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+            theme: 'bootstrap4'
+            })
+        });
+    </script>
     <script>
         @if(Session::has('success'))
             toastr.options = {
@@ -178,6 +198,276 @@
             document.getElementById('age').value = age;
         }
     </script>
+    <script>
+        $(document).ready(function() {
+            $('.update-field').on('change', function() {
+                var elementType = $(this).prop('tagName').toLowerCase();
+                if (elementType === 'input' || elementType === 'textarea') {
+                    columnid = $(this).data('column-id');
+                    columnname = $(this).data('column-name');
+                } else if (elementType === 'select') {
+                    columnid = $(this).find('option:selected').data('column-id');
+                    columnname = $(this).find('option:selected').data('column-name');
+                }
 
+                var value = $(this).val();
+
+                $.ajax({
+                    url: '{{ route("patientUpdate") }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: columnid,
+                        column: columnname,
+                        value: value
+                    },
+                    success: function(response) {
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        if (xhr.status === 422) {
+                            var errors = xhr.responseJSON.errors;
+                            console.error('Validation errors:', errors);
+                        } else {
+                            console.error('Error:', error);
+                        }
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            $('.update-field1').on('change', function() {
+            var columnId = $(this).data('column-id');
+            var columnName = $(this).data('column-name');
+            var value = $(this).val();
+            var dataArray = $(this).data('array'); // Add this line
+
+            $.ajax({
+                url: "{{ route('patientHistory') }}",
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: columnId,
+                    column: columnName,
+                    value: value,
+                    data_array: dataArray // Add this line
+                },
+                success: function(response) {
+                    
+                }
+            });
+        });
+    });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#patient-select').change(function() {
+                var selectedId = $(this).val();
+                if (selectedId) {
+                    var url = '{{ route("reportsRead", ":id") }}';
+                    url = url.replace(':id', selectedId);
+                    window.location.href = url;
+                }
+            });
+        });
+    </script>
+
+    <script>
+        function updateCoursePreferences(studCollege) {
+        $.ajax({
+                url: '{{ route("getCourse") }}?studCollege=' + studCollege,
+                type: 'GET',
+                success: function(data) {
+                    updateCourseOptions('studCourse', data.course);
+                },
+                error: function() {
+                    console.error('Error fetching course');
+                }
+            });
+        }
+
+        function updateCourseOptions(selectName, options) {
+            const select = $('select[name=' + selectName + ']');
+            select.empty();
+            select.append('<option value="">Select Course</option>');
+            $.each(options, function(key, value) {
+                select.append('<option value="' + value.progAcronym + '">' + value.progAcronym + '</option>');
+            });
+        }
+
+        $('#collegeSelect').change(function() {
+            const selectedCollege = $(this).val();
+            updateCoursePreferences(selectedCollege);
+        });
+
+    </script>
+    @if(Route::currentRouteName() == 'dash')
+    <script>
+        $(function () {
+            var donutChartCanvas = $('#donutChartPatient').get(0).getContext('2d')
+            var donutData        = {
+            labels: [
+                'Student',
+                'Employee',
+                'Guest',
+            ],
+            datasets: [
+                {
+                data: [{{ count($pstudent) }},{{ count($pemployee) }},{{ count($pguest) }}],
+                backgroundColor : ['#00a65a', '#00c0ef', '#3c8dbc'],
+                }
+            ]
+            }
+            var donutOptions     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+
+            var donutChartCanvas1 = $('#donutChartRemarks').get(0).getContext('2d')
+            var donutData1        = {
+            labels: [
+                'Fit for enrollment',
+                'Not fit for enrollment',
+                'Pending',
+            ],
+            datasets: [
+                {
+                data: [{{ count($remarks1) }},{{ count($remarks2) }},{{ count($remarks3) }}],
+                backgroundColor : ['#00a65a', '#00c0ef', '#3c8dbc'],
+                }
+            ]
+            }
+            var donutOptions1     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+
+            new Chart(donutChartCanvas, {
+                type: 'doughnut',
+                data: donutData,
+                options: donutOptions
+            })
+
+            new Chart(donutChartCanvas1, {
+                type: 'doughnut',
+                data: donutData1,
+                options: donutOptions1
+            })
+        });
+    </script>
+    @endif
+    <script>
+        $(document).ready(function() {
+            $('.user-delete').on('click', function() {
+                var patientId = $(this).data('id');
+                var row = $('#tr-' + patientId);
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var url = '{{ route("userDelete", ":id") }}'.replace(':id', patientId);
+
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            success: function(response) {
+                                console.log("Server response:", response);
+                                if(response.status == 200) {
+                                    row.fadeOut(500, function() {
+                                        $(this).remove();
+                                    });
+                                    Swal.fire({
+                                        title: 'Deleted!',
+                                        text: 'The record has been deleted.',
+                                        icon: 'success',
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        'Failed!',
+                                        'Failed to delete the record.',
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("AJAX error:", status, error);
+                                Swal.fire(
+                                    'Error!',
+                                    'An error occurred while deleting the record.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.patient-delete').on('click', function() {
+                var patientId = $(this).data('id');
+                var row = $('#tr-' + patientId);
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var url = '{{ route("patientDelete", ":id") }}'.replace(':id', patientId);
+
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            success: function(response) {
+                                console.log("Server response:", response);
+                                if(response.status == 200) {
+                                    row.fadeOut(500, function() {
+                                        $(this).remove();
+                                    });
+                                    Swal.fire({
+                                        title: 'Deleted!',
+                                        text: 'The record has been deleted.',
+                                        icon: 'success',
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        'Failed!',
+                                        'Failed to delete the record.',
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("AJAX error:", status, error);
+                                Swal.fire(
+                                    'Error!',
+                                    'An error occurred while deleting the record.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

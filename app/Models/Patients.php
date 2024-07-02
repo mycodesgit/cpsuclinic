@@ -9,9 +9,6 @@ class Patients extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id';
-    protected $table = 'patients';
-
     protected $fillable = [
         'lname',
         'fname',
@@ -28,6 +25,7 @@ class Patients extends Model
         'c_status',
         'studCollege',
         'studCourse',
+        'office',
         'guardian',
         'guardian_occup',
         'guardian_contact',
@@ -53,5 +51,12 @@ class Patients extends Model
         'pads_use',
         'mens_symp',
         'lmp',
+        'en_pexam',
+        'findings_pexam',
+        'other_pexam',
+        'other_find',
+        'pexam_pwd',
+        'pexam_remarks',
+        'pend_reason',
     ];    
 }

@@ -1,6 +1,11 @@
 @extends('layout.master_layout')
 
 @section('body')
+<style>
+    .mtop {
+        margin-top: -15px;
+    }
+</style>
 <div class="container">
     <div class="row">
         <div class="col-md-2">
@@ -31,15 +36,15 @@
                             <div class="form-row">
                                 <div class="col-md-3">
                                     <label class="badge badge-secondary">Last Name</label><br>
-                                    <input type="text" name="lname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" placeholder="Enter Last Name">
+                                    <input type="text" name="lname" class="form-control form-control-sm" placeholder="Enter Last Name">
                                 </div>
                                 <div class="col-md-3">
                                     <label class="badge badge-secondary">First Name</label><br>
-                                    <input type="text" name="fname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" placeholder="Enter First Name">
+                                    <input type="text" name="fname" class="form-control form-control-sm" placeholder="Enter First Name">
                                 </div>
                                 <div class="col-md-3">
                                     <label class="badge badge-secondary">Middle Name</label><br>
-                                    <input type="text" name="mname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" placeholder="Enter Middle Name">
+                                    <input type="text" name="mname" class="form-control form-control-sm" placeholder="Enter Middle Name">
                                 </div>
                                 <div class="col-md-3">
                                     <label class="badge badge-secondary">Ext. Name</label><br>
@@ -54,7 +59,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mtop">
                             <div class="form-row">
                                 <div class="col-md-3">
                                     <label class="badge badge-secondary">Category</label><br>
@@ -62,7 +67,7 @@
                                         <option disabled selected> --Select-- </option>
                                         <option value="1">Student</option>
                                         <option value="2">Employee</option>
-                                        <option value="3">Outside</option>
+                                        <option value="3">Guest</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -86,16 +91,16 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mtop">
                             <div class="form-row">
                                 <div class="col-md-12">
                                     <label class="badge badge-secondary">Home Address:</label>
-                                    <input type="text" name="home_add" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" placeholder="Enter Home Address">
+                                    <input type="text" name="home_add" class="form-control form-control-sm" placeholder="Enter Home Address">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mtop">
                             <div class="form-row">
                                 <div class="col-md-3">
                                     <label class="badge badge-secondary">Contact Number:</label>
@@ -133,11 +138,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mtop">
                             <div class="form-row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label class="badge badge-secondary">College/Department</label>
-                                    <select class="form-control form-control-sm" name="studCollege" id="collegeSelect">
+                                    <select class="form-control form-control-sm select2" name="studCollege" id="collegeSelect">
                                         <option disabled selected> --Select-- </option>
                                         @foreach($col as $college)
                                             <option value="{{ $college->college_abbr }}">{{ $college->college_name }}</option>
@@ -145,24 +150,34 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label class="badge badge-secondary">Course/Year</label>
-                                    <select class="form-control form-control-sm" name="studCourse" id="courseSelect">
+                                <div class="col-md-4">
+                                    <label class="badge badge-secondary">Course</label>
+                                    <select class="form-control form-control-sm select2" name="studCourse" id="courseSelect">
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="badge badge-secondary">Office</label>
+                                    <select class="form-control form-control-sm select2" name="office" id="office">
+                                        <option disabled selected> --Select-- </option>
+                                        @foreach($offices as $off)
+                                            <option value="{{ $off->id }}">{{ $off->office_abbr }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mtop">
                             <div class="form-row">
                                 <div class="col-md-6">
-                                    <label class="badge badge-secondary">Name of Parents/Guardian</label>
-                                    <input type="text" name="guardian" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" placeholder="Enter Parents Name / Guardian">
+                                    <label class="badge badge-secondary">Full Name of Parents/Guardian</label>
+                                    <input type="text" name="guardian" class="form-control form-control-sm" placeholder="Enter Parents Full Name / Guardian">
                                 </div>
 
                                 <div class="col-md-3">
                                     <label class="badge badge-secondary">Occupation</label>
-                                    <input type="text" name="guardian_occup" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" placeholder="Enter Occupation">
+                                    <input type="text" name="guardian_occup" class="form-control form-control-sm" placeholder="Enter Occupation">
                                 </div>
 
                                 <div class="col-md-3">
@@ -172,14 +187,48 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mtop">
                             <div class="form-row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="badge badge-secondary">Address:</label>
-                                    <input type="text" name="guardian_add" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" placeholder="Enter Parents/Guardian Address">
+                                    <input type="text" name="guardian_add" class="form-control form-control-sm" placeholder="Enter Parents/Guardian Address">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="badge badge-secondary">Height:</label>
+                                    <input type="text" name="height" class="form-control form-control-sm" placeholder="Enter Height">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="badge badge-secondary">Weight:</label>
+                                    <input type="text" name="weight" class="form-control form-control-sm" placeholder="Enter Weight">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="badge badge-secondary">BMI:</label>
+                                    <input type="text" name="bmi" class="form-control form-control-sm" placeholder="Enter BMI">
                                 </div>
                             </div>
                         </div> 
+
+                        <div class="form-group mtop">
+                            <div class="form-row">
+                                <div class="col-md-3">
+                                    <label class="badge badge-secondary">Temp:</label>
+                                    <input type="text" name="temp" class="form-control form-control-sm" placeholder="Enter Tmp.">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="badge badge-secondary">PR:</label>
+                                    <input type="text" name="pr" class="form-control form-control-sm" placeholder="Enter PR">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="badge badge-secondary">BP:</label>
+                                    <input type="text" name="bp" class="form-control form-control-sm" placeholder="Enter BP">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="badge badge-secondary">RR:</label>
+                                    <input type="text" name="rr" class="form-control form-control-sm" placeholder="Enter RR">
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="form-group">
                             <div class="form-row">

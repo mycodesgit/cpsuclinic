@@ -26,29 +26,3 @@
 // });
 
 
-function updateCoursePreferences(studCollege) {
-    $.ajax({
-        url: courseRoute + '?studCollege=' + studCollege,
-        type: 'GET',
-        success: function(data) {
-            updateCourseOptions('studCourse', data.course);
-        },
-        error: function() {
-            console.error('Error fetching course');
-        }
-    });
-}
-
-function updateCourseOptions(selectName, options) {
-    const select = $('select[name=' + selectName + ']');
-    select.empty();
-    select.append('<option value="">Select Course</option>');
-    $.each(options, function(key, value) {
-        select.append('<option value="' + value.progAcronym + '">' + value.progAcronym + '</option>');
-    });
-}
-
-$('#collegeSelect').change(function() {
-    const selectedCollege = $(this).val();
-    updateCoursePreferences(selectedCollege);
-});
