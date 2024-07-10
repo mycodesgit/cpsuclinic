@@ -502,7 +502,7 @@
         </table>
     </div>
     <p style="font-size: 12px; margin-top: -2px;"><b>I hereby certify that the above history is true to best of my knowledge. </b></p>
-    <table class="table" style="margin-top: 15px; margin-bottom: -20px;">
+    <table class="table" style="margin-top: 15px; margin-bottom: -10px;">
         <tr>
             <td class="text-center" width="180"><span class="td-b1 text-center" style="display: inline-block; width: 100%;">{{ strtoupper($patients->fname) }} {{ strtoupper($patients->lname) }} {{ strtoupper($patients->ext_name) }} {{ strtoupper($patients->mname) }}</span><b>Student's Signature</td>
             <td class="text-center" width="180"></td>
@@ -516,10 +516,10 @@
     </table>
     <table class="table" style="font-size: 15px;">
         <tr>
-            <td class="bordered text-center" width="38%">Abril</td>
-            <td class="bordered text-center" width="38%">Edwin</td>
-            <td class="bordered text-center" width="38%">Trio</td>
-            <td class="bordered text-center" width="16%">26</td>
+            <td class="bordered text-center" width="38%">{{ strtoupper($patients->lname) }}</td>
+            <td class="bordered text-center" width="38%">{{ strtoupper($patients->fname) }} {{ strtoupper($patients->ext_name) }}</td>
+            <td class="bordered text-center" width="38%">{{ strtoupper($patients->mname) }}</td>
+            <td class="bordered text-center" width="16%">{{ strtoupper($patients->age) }}</td>
         </tr>
         <tr>
             <th class="text-center">LAST NAME</th>
