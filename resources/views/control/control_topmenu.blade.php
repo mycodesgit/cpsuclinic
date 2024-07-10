@@ -9,7 +9,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('patientAdd') }}" class="nav-link {{ request()->is('patient*') ? 'active' : '' }}">
+        <a href="{{ route('patientAdd') }}" class="nav-link {{ request()->is('patient*') || request()->is('file*') ? 'active' : '' }}">
            <i class="fas fa-user-injured"></i> PREE-HE
         </a>
     </li>

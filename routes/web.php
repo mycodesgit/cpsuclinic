@@ -8,6 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\FileController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,6 +62,13 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('list/delete/{id}', [UserController::class, 'userDelete'])->name('userDelete');
     });
 
+    //Files
+    Route::prefix('/file')->group(function() {
+        Route::get('/{cat}/{id}', [FileController::class, 'fileRead'])->name('fileRead');
+        Route::post('/file-create/{id}', [FileController::class, 'fileCreate'])->name('fileCreate');
+        Route::get('/deleteFile/{id}', [FileController::class, 'deleteFile'])->name('deleteFile');
+    });
+    
     Route::prefix('/settings')->group(function () {
         Route::get('/list/patient', [SettingsController::class,'accountRead'])->name('accountRead');
     });

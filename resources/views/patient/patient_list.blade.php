@@ -53,6 +53,9 @@
                                         <a href="{{ route('moreInfo', ['id' => $p->category, 'mid' => $p->id]) }}" class="btn btn-info btn-sm" title="More Info">
                                             <i class="fas fa-exclamation-circle"></i> 
                                         </a>
+                                        <a href="{{ route('fileRead', ['cat' => $p->category, 'id' => $p->id]) }}" class="btn btn-success btn-sm" title="More Info">
+                                            <i class="fas fa-file"></i> 
+                                        </a>
                                         <a href="{{ route('reportsRead', $p->id) }}" class="btn btn-warning btn-sm" title="Pre-Entrance Health Examination Report">
                                             <i class="fas fa-file-pdf"></i> 
                                         </a>

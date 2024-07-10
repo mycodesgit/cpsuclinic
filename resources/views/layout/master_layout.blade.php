@@ -136,9 +136,10 @@
 
     <script src="{{ asset('js/basic/table.js') }}"></script>
 
+    @if(request()->is('home'))
     <!-- ChartJS -->
     <script src="style/plugins/chart.js/Chart.min.js"></script>
-
+    @endif
     <script src="{{ asset('js/validation/patientValidation.js') }}"></script>
 
     <!-- Select2 -->
@@ -357,117 +358,174 @@
         });
     </script>
     @endif
-    <script>
-        $(document).ready(function() {
-            $('.user-delete').on('click', function() {
-                var patientId = $(this).data('id');
-                var row = $('#tr-' + patientId);
+<script>
+    $(document).ready(function() {
+        $('.user-delete').on('click', function() {
+            var patientId = $(this).data('id');
+            var row = $('#tr-' + patientId);
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var url = '{{ route("userDelete", ":id") }}'.replace(':id', patientId);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = '{{ route("userDelete", ":id") }}'.replace(':id', patientId);
 
-                        $.ajax({
-                            url: url,
-                            type: 'GET',
-                            success: function(response) {
-                                console.log("Server response:", response);
-                                if(response.status == 200) {
-                                    row.fadeOut(500, function() {
-                                        $(this).remove();
-                                    });
-                                    Swal.fire({
-                                        title: 'Deleted!',
-                                        text: 'The record has been deleted.',
-                                        icon: 'success',
-                                        timer: 2000,
-                                        showConfirmButton: false
-                                    });
-                                } else {
-                                    Swal.fire(
-                                        'Failed!',
-                                        'Failed to delete the record.',
-                                        'error'
-                                    );
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.error("AJAX error:", status, error);
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        success: function(response) {
+                            console.log("Server response:", response);
+                            if(response.status == 200) {
+                                row.fadeOut(500, function() {
+                                    $(this).remove();
+                                });
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'The record has been deleted.',
+                                    icon: 'success',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                            } else {
                                 Swal.fire(
-                                    'Error!',
-                                    'An error occurred while deleting the record.',
+                                    'Failed!',
+                                    'Failed to delete the record.',
                                     'error'
                                 );
                             }
-                        });
-                    }
-                });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("AJAX error:", status, error);
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while deleting the record.',
+                                'error'
+                            );
+                        }
+                    });
+                }
             });
         });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('.patient-delete').on('click', function() {
-                var patientId = $(this).data('id');
-                var row = $('#tr-' + patientId);
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('.patient-delete').on('click', function() {
+            var patientId = $(this).data('id');
+            var row = $('#tr-' + patientId);
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var url = '{{ route("patientDelete", ":id") }}'.replace(':id', patientId);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = '{{ route("patientDelete", ":id") }}'.replace(':id', patientId);
 
-                        $.ajax({
-                            url: url,
-                            type: 'GET',
-                            success: function(response) {
-                                console.log("Server response:", response);
-                                if(response.status == 200) {
-                                    row.fadeOut(500, function() {
-                                        $(this).remove();
-                                    });
-                                    Swal.fire({
-                                        title: 'Deleted!',
-                                        text: 'The record has been deleted.',
-                                        icon: 'success',
-                                        timer: 2000,
-                                        showConfirmButton: false
-                                    });
-                                } else {
-                                    Swal.fire(
-                                        'Failed!',
-                                        'Failed to delete the record.',
-                                        'error'
-                                    );
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.error("AJAX error:", status, error);
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        success: function(response) {
+                            console.log("Server response:", response);
+                            if(response.status == 200) {
+                                row.fadeOut(500, function() {
+                                    $(this).remove();
+                                });
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'The record has been deleted.',
+                                    icon: 'success',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                            } else {
                                 Swal.fire(
-                                    'Error!',
-                                    'An error occurred while deleting the record.',
+                                    'Failed!',
+                                    'Failed to delete the record.',
                                     'error'
                                 );
                             }
-                        });
-                    }
-                });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("AJAX error:", status, error);
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while deleting the record.',
+                                'error'
+                            );
+                        }
+                    });
+                }
             });
         });
-    </script>
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('.file-delete').on('click', function() {
+            var fileId = $(this).data('id');
+            var row = $('#tr-file-' + fileId);
+            alert(fileId);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#187744',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = '{{ route("deleteFile", ":id") }}'.replace(':id', fileId);
+
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        success: function(response) {
+                            console.log("Server response:", response);
+                            if(response.status == 200) {
+                                row.fadeOut(500, function() {
+                                    $(this).remove();
+                                });
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'Your file has been deleted.',
+                                    icon: 'success',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Failed!',
+                                    response.message,
+                                    'error'
+                                );
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("AJAX error:", status, error);
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while deleting the file.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
