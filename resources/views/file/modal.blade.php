@@ -12,7 +12,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="file">Choose File:</label>
-                        <input type="file" class="form-control-file" id="file" name="file" required>
+                        <input type="file" class="form-control-file" accept=".pdf" id="file" name="file" required>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
