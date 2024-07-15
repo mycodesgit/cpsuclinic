@@ -9,7 +9,8 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\FileController;
-
+use App\Http\Controllers\RegionController;
+use App\Http\Controllers\AddressController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,6 +69,13 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::post('/file-create/{id}', [FileController::class, 'fileCreate'])->name('fileCreate');
         Route::get('/deleteFile/{id}', [FileController::class, 'deleteFile'])->name('deleteFile');
     });
+
+    //Address
+    Route::prefix('/address')->group(function() {
+        Route::get('/provinces/{regionId}', [AddressController::class, 'getProvinces'])->name('getProvinces');
+        Route::get('/cities/{provinceId}', [AddressController::class, 'getCities'])->name('getCities');
+        Route::get('/barangays/{cityId}', [AddressController::class, 'getBarangays'])->name('getBarangays');
+    });    
     
     Route::prefix('/settings')->group(function () {
         Route::get('/list/patient', [SettingsController::class,'accountRead'])->name('accountRead');

@@ -135,7 +135,7 @@
         <table class="table">
             <tr>
                 <td width="64">Home Address:</td>
-                <td><div class="tr-b w-100"><b>{{ $patients->home_add }}<span class="period">.</span></div></td>
+                <td><div class="tr-b w-100"><b>{{ ucwords(strtolower($hbarangay->name)) }}, {{ ucwords(strtolower($hcity->name)) }}, {{ ucwords(strtolower($hprovince->name)) }}<span class="period">.</span></div></td>
             </tr>
         </table>
         <table class="table">
@@ -163,7 +163,7 @@
         <table class="table">
             <tr>
                 <td width="37">Address:</td>
-                <td><div class="tr-b w-100"><b>{{ ucfirst($patients->guardian_add) }} <span class="period">.</span></div></td>
+                <td><div class="tr-b w-100"><b>{{ ucwords(strtolower($gbarangay->name)) }}, {{ ucwords(strtolower($gcity->name)) }}, {{ ucwords(strtolower($gprovince->name)) }}<span class="period">.</span></div></td>
             </tr>
         </table>
         <table class="table" style="margin-bottom: 10px;">
@@ -178,23 +178,39 @@
             <thead>
                 <tr>
                     <th rowspan="3" class="bordered text-center" width="140">ANTHROPOMETRICS</th>
-                    <td class="" style="border-top: 1px solid black;">Height: <b><span class="td-b1 text-center" style="display: inline-block; width: 50px;"> {{ $patients->height }} </span> ft/in</td>
+                    <td class="" style="border-top: 1px solid black;">Height: <b>
+                        <span class="td-b1 text-center" style="display: inline-block; width: 50px;">
+                            @php
+                                $heightInches = 68;
+                                $feet = floor($heightInches / 12);
+                                $inches = $heightInches % 12;
+                            @endphp
+                            {{ $feet }}'{{ $inches }}"
+                        </span> ft</td>
                     <th rowspan="3" class="bordered text-center"  width="110">VITAL SIGNS</th>
                     <td class="" style="border-top: 1px solid black;">
-                        Temp:  <b><span class="td-b1 text-center" style="display: inline-block; width: 50px;"> {{ $patients->temp }} </span> C BP:  <b><span class="td-b1 text-center" style="display: inline-block; width: 50px;"> {{ $patients->bp }} </span>
+                        Temp:  <b><span class="td-b1 text-center" style="display: inline-block; width: 50px;"> {{ $patients->temp }} &deg;C.</span> C BP:  <b><span class="td-b1 text-center" style="display: inline-block; width: 50px;"> {{ $patients->bp }} </span>
                     </td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Weight:  <b><span class="td-b1 text-center" style="display: inline-block; width: 50px;">  {{ $patients->weight }} </span>Kg</td>
+                    <td>Weight:  <b><span class="td-b1 text-center" style="display: inline-block; width: 50px;">  {{ $patients->weight_kg }} </span>Kg</td>
                     <td>
                         PR:  <b><span class="td-b1 text-center" style="display: inline-block; width: 50px;"> {{ $patients->pr }} </span>/min RR:  <b><span class="td-b1 text-center" style="display: inline-block; width: 50px;"> {{ $patients->rr }} </span>/min
                     </td>
                 </tr>
                 <tr>
                     <td style="border-bottom: 1px solid black;">
-                       BMI:  <b><span class="td-b1 text-center" style="display: inline-block; width: 50px;"> {{ explode(';', $patients->bmi)[0] }} </span>;<span class="td-b1 text-center" style="display: inline-block; width: 50px;"> {{ explode(';', $patients->bmi)[1] }} </span>
+                       BMI:  <b><span class="td-b1 text-center" style="display: inline-block; width: 30px;"> {{ $patients->bmi }} </span>;<span class="td-b1 text-center" style="display: inline-block; width: 60px; font-size: 9px;"> 
+                        {{ ($patients->bmi < 16.0) ? '(Severely Underweight)' : '' }} 
+                        {{ ($patients->bmi >= 16.0 && $patients->bmi <= 18.4) ? '(Underweight)' : '' }} 
+                        {{ ($patients->bmi >= 18.5 && $patients->bmi <= 24.9) ? '(Normal)' : '' }} 
+                        {{ ($patients->bmi >= 25.0 && $patients->bmi <= 29.9) ? '(Overweight)' : '' }} 
+                        {{ ($patients->bmi >= 30.0 && $patients->bmi <= 34.9) ? '(Moderately Obese)' : '' }} 
+                        {{ ($patients->bmi >= 35.0 && $patients->bmi <= 39.9) ? '(Severely Obese)' : '' }} 
+                        {{ ($patients->bmi >= 40.0) ? '(Morbidly Obese' : '' }}                         
+                        </span>
                     </td>
                     <td style="border-bottom: 1px solid black;"></td>
                 </tr>
@@ -217,201 +233,200 @@
             <tbody>
                 <tr>
                     <td class="bordered">Allergy (Food, Medicine)</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[0] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[0] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[0] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[0] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[0] == 1) ? (explode(',', $patients->hospital_confine)[0] == 0) ? 'checked' : '' : '' }}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[0]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[0])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[0]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[0])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">COVID-19 Infection</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[1] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[1] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[1] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[1] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[1] == 1) ? (explode(',', $patients->hospital_confine)[1] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[1]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[1])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[1]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[1])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Nosebleed</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[2] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[2] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[2] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[2] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[2] == 1) ? (explode(',', $patients->hospital_confine)[2] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[2]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[2])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[2]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[2])->format('F d, Y') : ''  }}</td>
                 <tr>
                     <td class="bordered">Dengue Fever</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[3] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[3] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[3] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[3] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[3] == 1) ? (explode(',', $patients->hospital_confine)[3] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[3]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[3])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[3]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[3])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Rheumatic Fever</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[4] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[4] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[4] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[4] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[4] == 1) ? (explode(',', $patients->hospital_confine)[4] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[4]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[4])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[4]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[4])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Typhoid Fever</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[5] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[5] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[5] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[5] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[5] == 1) ? (explode(',', $patients->hospital_confine)[5] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[5]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[5])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[5]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[5])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Arthritis</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[6] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[6] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[6] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[6] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[6] == 1) ? (explode(',', $patients->hospital_confine)[6] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[6]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[6])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[6]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[6])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Urinary Tract Infect, STD</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[7] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[7] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[7] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[7] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[7] == 1) ? (explode(',', $patients->hospital_confine)[7] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[7]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[7])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[7]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[7])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Amoebiasis</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[8] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[8] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[8] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[8] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[8] == 1) ? (explode(',', $patients->hospital_confine)[8] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[8]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[8])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[8]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[8])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Hyperacidity</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[9] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[9] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[9] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[9] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[9] == 1) ? (explode(',', $patients->hospital_confine)[9] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[9]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[9])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[9]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[9])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Asthma</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[10] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[10] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[10] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[10] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[10] == 1) ? (explode(',', $patients->hospital_confine)[10] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[10]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[10])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[10]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[10])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Hepatitis A/B</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[11] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[11] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[11] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[11] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[11] == 1) ? (explode(',', $patients->hospital_confine)[11] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[11]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[11])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[11]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[11])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Heart Disease</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[12] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[12] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[12] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[12] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[12] == 1) ? (explode(',', $patients->hospital_confine)[12] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[12]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[12])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[12]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[12])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Mumps</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[13] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[13] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[13] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[13] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[13] == 1) ? (explode(',', $patients->hospital_confine)[13] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[13]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[13])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[13]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[13])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Tuberculosis, Pneumonia</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[14] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[14] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[14] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[14] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[14] == 1) ? (explode(',', $patients->hospital_confine)[14] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[14]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[14])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[14]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[14])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Chicken Pox</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[15] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[15] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[15] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[15] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[15] == 1) ? (explode(',', $patients->hospital_confine)[15] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[15]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[15])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[15]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[15])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Measles</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[16] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[16] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[16] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[16] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[16] == 1) ? (explode(',', $patients->hospital_confine)[16] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[16]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[16])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[16]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[16])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Fainting Spells. Sezure</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[17] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[17] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[17] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[17] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[17] == 1) ? (explode(',', $patients->hospital_confine)[17] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[17]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[17])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[17]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[17])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Hernia</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[18] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[18] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[18] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[18] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[18] == 1) ? (explode(',', $patients->hospital_confine)[18] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[18]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[18])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[18]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[18])->format('F d, Y') : ''  }}</td>
                 </tr>
                 <tr>
                     <td class="bordered">Thyroid Disease, Cancer</td>
-                    <td class="bordered text-center"><b></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[19] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center"><b>{{ explode(',', $patients->disease_rem)[19] }}</td>
                     <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[19] == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Yes</td>
-                    .
-                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->hospital_confine)[19] == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" data-chk="chk" id="checkbox" {{ (explode(',', $patients->disease)[19] == 1) ? (explode(',', $patients->hospital_confine)[19] == 0) ? 'checked' : '' : ''}}></td>
                     <td class="bordered text-center">No</td>
                     <td class="bordered text-center"><b>{{ ((explode(',', $patients->date_hospitaliz)[19]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz)[19])->format('F d, Y'). '-'  : '' }} {{ ((explode(',', $patients->date_hospitaliz1)[19]) != '') ? \Carbon\Carbon::parse(explode(',', $patients->date_hospitaliz1)[19])->format('F d, Y') : ''  }}</td>
                 </tr>
@@ -444,9 +459,9 @@
                 <tr>
                     <td class="bordered text-center" width="20"></td>
                     <td colspan="7">
-                        <div style="margin-top: 10px; margin-bottom: 10px;">
-                            COVID-19 Vaccine: <span class="td-b1 text-center" style="display: inline-block; width: 90px;"><b>{{ explode(',', $patients->immunization2)[0] }}</span> 1st Dose <span class="td-b1 text-center" style="display: inline-block; width: 60px;"><b>{{ explode(',', $patients->immunization2)[1] }}</span> 2nd: <span class="td-b1 text-center" style="display: inline-block; width: 60px;"><b>{{ explode(',', $patients->immunization2)[2] }}</span><br>
-                            Booster Dose <span class="td-b1 text-center" style="display: inline-block; width: 90px;"><b>{{ explode(',', $patients->immunization2)[3] }}</span> 1st: <span class="td-b1 text-center" style="display: inline-block; width: 60px;"><b>{{ explode(',', $patients->immunization2)[4] }}</span> 2nd: <span class="td-b1 text-center" style="display: inline-block; width: 60px;"><b>{{ explode(',', $patients->immunization2)[5] }}</span>
+                        <div style="margin-top: 5px; margin-bottom: 5px;">
+                            <b>COVID-19 Vaccine:</b> <br>1st Dose <span class="td-b1 text-center" style="display: inline-block; width: 170px;"><b>{{ explode(',', $patients->immunization2)[0] }} - {{ explode(',', $patients->immunization2)[1] }}</span> 2nd: <span class="td-b1 text-center" style="display: inline-block; width: 170px;"><b>{{ explode(',', $patients->immunization2)[2] }} - {{ explode(',', $patients->immunization2)[3] }}</span><br>
+                            <b>Booster Dose</b> <br>1st Dose <span class="td-b1 text-center" style="display: inline-block; width: 170px;"><b>{{ explode(',', $patients->immunization2)[4] }} - {{ explode(',', $patients->immunization2)[5] }}</span> 2nd: <span class="td-b1 text-center" style="display: inline-block; width: 170px;"><b>{{ explode(',', $patients->immunization2)[6] }} - {{ explode(',', $patients->immunization2)[7] }}</span>
                         </div>
                     </td>
                 </tr>
@@ -455,7 +470,7 @@
                     <td class="bordered text-center" width="20"></td>
                     <td class="bordered" colspan="7">
                         <div style="margin-top: 10px;">
-                            <span class="td-b1 text-center" style="display: inline-block; width: 50px;"><b>{{ explode(',', $patients->smoking)[0] }}</span> (sticks/day for <span class="td-b1 text-center" style="display: inline-block; width: 50px;">{{ explode(',', $patients->smoking)[1] }}</span> years) 
+                            <span class="td-b1 text-center" style="display: inline-block; width: 120px;"><b>{{ explode(',', $patients->smoking)[0] }}</span> (sticks/day for <span class="td-b1 text-center" style="display: inline-block; width: 50px;">{{ explode(',', $patients->smoking)[1] }}</span> years) 
                         </div>
                     </td>
                 </tr>
@@ -464,7 +479,7 @@
                     <td class="bordered text-center" width="20"></td>
                     <td class="bordered" colspan="7">
                         <div style="margin-top: 10px;">
-                            <span class="td-b1 text-center" style="display: inline-block; width: 50px;">{{ explode(',', $patients->drinking)[0] }}</span> (beer per <span class="td-b1 text-center" style="display: inline-block; width: 50px;">{{ explode(',', $patients->drinking)[1] }}</span>;<span class="td-b1 text-center" style="display: inline-block; width: 50px;">{{ explode(',', $patients->drinking)[2] }}</span>shots per <span class="td-b1 text-center" style="display: inline-block; width: 50px;">{{ explode(',', $patients->drinking)[3] }}</span>) 
+                            <span class="td-b1 text-center" style="display: inline-block; width: 120px;">{{ explode(',', $patients->drinking)[0] }}</span> (beer per <span class="td-b1 text-center" style="display: inline-block; width: 50px;">{{ explode(',', $patients->drinking)[1] }}</span>;<span class="td-b1 text-center" style="display: inline-block; width: 50px;">{{ explode(',', $patients->drinking)[2] }}</span>shots per <span class="td-b1 text-center" style="display: inline-block; width: 50px;">{{ explode(',', $patients->drinking)[3] }}</span>) 
                         </div>
                     </td>
                 </tr>
@@ -484,7 +499,7 @@
                     <td class="bordered text-center">{{ $patients->Duration }}</td>
                     <td class="bordered text-center"><input type="checkbox" id="checkbox" {{ ($patients->Interval == 1) ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Regular</td>
-                    <td class="bordered text-center"><input type="checkbox" id="checkbox" {{ ($patients->Interval == 0) ? 'checked' : '' }}></td>
+                    <td class="bordered text-center"><input type="checkbox" id="checkbox" {{ ($patients->Interval == 0 && $patients->sex == 'Female') ? 'checked' : '' }}></td>
                     <td class="bordered text-center">Irregular</td>
                     <td class="bordered text-center">{{ $patients->pads_use }}</td>
                 </tr>
@@ -496,22 +511,22 @@
                     <th class="bordered text-center" width="132">MENSTRUAL SYMPTOMS</th>
                     <td class="bordered text-center" width="221">{{ ucfirst($patients->mens_symp) }}</td>
                     <td class="bordered text-center" width="30">LMP</td>
-                    <td class="bordered text-center">{{ ucfirst($patients->lmp) }}</td>
+                    <td class="bordered text-center">{{ \Carbon\Carbon::parse($patients->lmp)->format('F j, Y') }}</td>
                 </tr>
             </thead>
         </table>
     </div>
     <p style="font-size: 12px; margin-top: -2px;"><b>I hereby certify that the above history is true to best of my knowledge. </b></p>
-    <table class="table" style="margin-top: 15px; margin-bottom: -10px;">
+    <table class="table" style="margin-top: 15px; margin-bottom: -17px;">
         <tr>
             <td class="text-center" width="180"><span class="td-b1 text-center" style="display: inline-block; width: 100%;">{{ strtoupper($patients->fname) }} {{ strtoupper($patients->lname) }} {{ strtoupper($patients->ext_name) }} {{ strtoupper($patients->mname) }}</span><b>Student's Signature</td>
             <td class="text-center" width="180"></td>
-            <td class="text-center" width=""><span class="td-b1 text-center" style="display: inline-block; width: 100%;"></span><b><span style="color: white;">..........</span>Date<span style="color: white;">..........</span></td>
+            <td class="text-center" width=""><span class="td-b1 text-center" style="display: inline-block; width: 100%;">{{ \Carbon\Carbon::parse($patients->created_at)->format('F j, Y') }}</span><b><span style="color: white;">..........</span>Date<span style="color: white;">..........</span></td>
         </tr>
     </table>
-    <table class="table" spellcheck="margin-top: 2px;">
+    <table class="table" spellcheck="margin-top: 0px;">
         <tr>
-            <td class="text-center" style="font-size: 12px;"><br><br><br>Documnet Control Code: CPSU-F-MDHU-01 Effective Date: 09/12/20218 Page No.: of 2</td>
+            <td class="text-center" style="font-size: 12px;"><br><br><br>Documnet Control Code: CPSU-F-MDHU-01 Effective Date: 09/12/20218 Page No.: 1 of 2</td>
         </tr>
     </table>
     <table class="table" style="font-size: 15px;">
@@ -543,7 +558,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">SKIN</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[0]  == 1 || explode(',', $patients->findings_pexam)[1]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[0]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Discoloration</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[1]  == 1) ?  'checked' : '' }}></td>
@@ -551,7 +566,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[2]  == 1 || explode(',', $patients->findings_pexam)[3]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[2]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Lesion</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[3]  == 1) ?  'checked' : '' }}></td>
@@ -559,7 +574,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center">HEAD</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[4]  == 1 || explode(',', $patients->findings_pexam)[5]  == 1) ?  'checked' : '' }}></td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[4]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Deformity</td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[5]  == 1) ?  'checked' : '' }}></td>
@@ -568,7 +583,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">EYES</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[6]  == 1 || explode(',', $patients->findings_pexam)[7]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[6]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Deformity</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[7]  == 1) ?  'checked' : '' }}></td>
@@ -576,7 +591,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[8]  == 1 || explode(',', $patients->findings_pexam)[9]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[8]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Swelling</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[9]  == 1) ?  'checked' : '' }}></td>
@@ -584,7 +599,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">EARS</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[10]  == 1 || explode(',', $patients->findings_pexam)[11]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[10]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Hearing Acuity</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[11]  == 1) ?  'checked' : '' }}></td>
@@ -592,7 +607,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[12]  == 1 || explode(',', $patients->findings_pexam)[13]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[12]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">R <span class="td-b1 text-center" style="display: inline-block; width: 30px;">  </span> L <span class="td-b1 text-center" style="display: inline-block; width: 30px;">  </span> </td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[13]  == 1) ?  'checked' : '' }}></td>
@@ -600,7 +615,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">NOSE</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[14]  == 1 || explode(',', $patients->findings_pexam)[15]  == 1) ?  'checked' : '' }}></td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[14]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Deformity</td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[15]  == 1) ?  'checked' : '' }}></td>
@@ -608,7 +623,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[16]  == 1 || explode(',', $patients->findings_pexam)[17]  == 1) ?  'checked' : '' }}></td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[16]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Bleeding</td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[17]  == 1) ?  'checked' : '' }}></td>
@@ -616,7 +631,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">MOUTH AND TONGUE</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[18]  == 1 || explode(',', $patients->findings_pexam)[19]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[18]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Inflamation</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[19]  == 1) ?  'checked' : '' }}></td>
@@ -624,7 +639,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[20]  == 1 || explode(',', $patients->findings_pexam)[21]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[20]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Tongue Deviation</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[21]  == 1) ?  'checked' : '' }}></td>
@@ -632,7 +647,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">NECK & LYMPH NODES</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[22]  == 1 || explode(',', $patients->findings_pexam)[23]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[22]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Rigidity</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[23]  == 1) ?  'checked' : '' }}></td>
@@ -640,7 +655,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[24]  == 1 || explode(',', $patients->findings_pexam)[25]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[24]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Mass/Swelling</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[25]  == 1) ?  'checked' : '' }}></td>
@@ -648,7 +663,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">HEART</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[26]  == 1 || explode(',', $patients->findings_pexam)[27]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[26]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Tachucardia</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[27]  == 1) ?  'checked' : '' }}></td>
@@ -656,7 +671,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[28]  == 1 || explode(',', $patients->findings_pexam)[29]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[28]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Bradycardia</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[29]  == 1) ?  'checked' : '' }}></td>
@@ -664,7 +679,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">CHEST</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[30]  == 1 || explode(',', $patients->findings_pexam)[31]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[30]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Tenderness</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[31]  == 1) ?  'checked' : '' }}></td>
@@ -672,7 +687,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[32]  == 1 || explode(',', $patients->findings_pexam)[33]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[32]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Bulges</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[33]  == 1) ?  'checked' : '' }}></td>
@@ -680,7 +695,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">LUNGS</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[34]  == 1 || explode(',', $patients->findings_pexam)[35]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[34]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Wheezing</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[35]  == 1) ?  'checked' : '' }}></td>
@@ -688,7 +703,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[36]  == 1 || explode(',', $patients->findings_pexam)[37]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[36]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Rales</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[37]  == 1) ?  'checked' : '' }}></td>
@@ -696,7 +711,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">BREAST & AXILLA</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[38]  == 1 || explode(',', $patients->findings_pexam)[39]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[38]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Dimpling</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[39]  == 1) ?  'checked' : '' }}></td>
@@ -704,7 +719,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[40]  == 1 || explode(',', $patients->findings_pexam)[41]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[40]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Enlarge lymph Nodes</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[41]  == 1) ?  'checked' : '' }}></td>
@@ -712,7 +727,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">ABDOMEN</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[42]  == 1 || explode(',', $patients->findings_pexam)[43]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[42]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Striae</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[43]  == 1) ?  'checked' : '' }}></td>
@@ -720,7 +735,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[44]  == 1 || explode(',', $patients->findings_pexam)[45]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[44]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Tenderness</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[45]  == 1) ?  'checked' : '' }}></td>
@@ -728,7 +743,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">BACK & SHOULDERS</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[46]  == 1 || explode(',', $patients->findings_pexam)[47]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[46]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Lordosis</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[47]  == 1) ?  'checked' : '' }}></td>
@@ -736,7 +751,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[48]  == 1 || explode(',', $patients->findings_pexam)[49]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[48]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Kyphosis</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[49]  == 1) ?  'checked' : '' }}></td>
@@ -744,7 +759,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">EXTRMITES</th>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[50]  == 1 || explode(',', $patients->findings_pexam)[51]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[50]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Deformity</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[51]  == 1) ?  'checked' : '' }}></td>
@@ -752,7 +767,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[52]  == 1 || explode(',', $patients->findings_pexam)[53]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[52]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Clubbing of nails</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[53]  == 1) ?  'checked' : '' }}></td>
@@ -775,11 +790,16 @@
             </tr>
             <tr>
                 <td colspan="7" style="text-align: right; height: 150px;">
-                    <span class="td-b1 text-center" style="display: inline-block; width: 51%;"><b>KRISTINE A. DURAN</span><br>
+                    <span class="td-b1 text-center" style="display: inline-block; width: 51%;"><b>KRISTINE C. DURAN, RN, MAN</span><br>
                     <span style="font-size: 12px; padding-right: 11px;">Name and Signature of Examining Registedred Nurse/Physician
                 </td>
             </tr>
         </tbody>
+    </table>
+    <table class="table" style="margin-top: 110px;">
+        <tr>
+            <td class="text-center" style="font-size: 12px;"><br><br><br>Documnet Control Code: CPSU-F-MDHU-01 Effective Date: 09/12/20218 Page No.: 2 of 2</td>
+        </tr>
     </table>
 </body>
 </html>

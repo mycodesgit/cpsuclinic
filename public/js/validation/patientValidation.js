@@ -10,6 +10,9 @@ $(function () {
             lname: {
                 required: true
             },
+            category: {
+                required: true
+            },
             birthdate: {
                 required: true
             },
@@ -19,7 +22,28 @@ $(function () {
             sex: {
                 required: true
             },
-            home_add: {
+            home_region: {
+                required: true
+            },
+            home_province: {
+                required: true
+            },
+            home_city: {
+                required: true
+            },
+            home_brgy: {
+                required: true
+            },
+            guardian_region: {
+                required: true
+            },
+            guardian_province: {
+                required: true
+            },
+            guardian_city: {
+                required: true
+            },
+            guardian_brgy: {
                 required: true
             },
             contact: {
@@ -34,12 +58,6 @@ $(function () {
             c_status: {
                 required: true
             },
-            studCollege: {
-                required: true
-            },
-            studCourse: {
-                required: true
-            },
             guardian: {
                 required: true
             },
@@ -51,7 +69,19 @@ $(function () {
             },
             guardian_add: {
                 required: true
-            }
+            },
+            height_cm: {
+                required: true
+            },
+            height_ft: {
+                required: true
+            },
+            weight_kg: {
+                required: true
+            },
+            weight_lb: {
+                required: true
+            },
         },
         messages: {
             fname: {
@@ -63,6 +93,9 @@ $(function () {
             lname: {
                 required: "Please enter a Last Name"
             },
+            category: {
+                required: "Please select Category"
+            },
             birthdate: {
                 required: "Please enter a Birthdate"
             },
@@ -72,8 +105,29 @@ $(function () {
             sex: {
                 required: "Please select a Gender"
             },
-            home_add: {
-                required: "Please enter a Home Address"
+            home_region: {
+                required: "Please select region"
+            },
+            home_province: {
+                required: "Please select province"
+            },
+            home_city: {
+                required: "Please select city"
+            },
+            home_brgy: {
+                required: "Please select barangay"
+            },
+            guardian_region: {
+                required: "Please select region"
+            },
+            guardian_province: {
+                required: "Please select province"
+            },
+            guardian_city: {
+                required: "Please select city"
+            },
+            guardian_brgy: {
+                required: "Please select barangay"
             },
             contact: {
                 required: "Please enter a Contact Number"
@@ -87,12 +141,6 @@ $(function () {
             c_status: {
                 required: "Please select a Civil Status"
             },
-            studCollege: {
-                required: "Please select a College"
-            },
-            studCourse: {
-                required: "Please select a Course"
-            },
             guardian: {
                 required: "Please enter a Guardian Name"
             },
@@ -102,10 +150,18 @@ $(function () {
             guardian_contact: {
                 required: "Please enter a Guardian Contact Number"
             },
-            guardian_add: {
-                required: "Please enter a Guardian Address"
+            height_cm: {
+                required: "Please enter a height(cm)"
+            },
+            height_ft: {
+                required: "Please enter a height(ft)"
+            },
+            weight_kg: {
+                required: "Please enter a weight(kg)"
+            },
+            weight_lb: {
+                required: "Please enter a weight(lb)"
             }
-            
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {

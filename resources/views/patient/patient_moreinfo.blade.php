@@ -9,7 +9,7 @@
         height: 17px !important;
     }
 </style>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
             <div class="card">
@@ -45,7 +45,6 @@
                         
                         <div class="tab-content p-0" style="margin-top: -30px !important;">
                             <div class="chart tab-pane active" id="page1" style="height: 100%;">
-                                    @csrf
                                     <div class="form-group">
                                         <div class="form-row">
                                             <div class="col-md-3">
@@ -109,11 +108,51 @@
                                     <div class="form-group mtop">
                                         <div class="form-row">
                                             <div class="col-md-12">
-                                                <label class="badge badge-secondary">Home Address:</label>
-                                                <input type="text" name="home_add" value="{{ ucfirst(strtolower($patients->home_add)) }}" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="home_add" placeholder="Enter Home Address">
+                                                <div class="form-row mt-2">
+                                                    <div class="col-md-12">
+                                                        <span class="text-muted"><b>HOME ADDRESS</b></span><br>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="badge badge-secondary">Region:</label>
+                                                        <select id="region" name="home_region" class="form-control select2 form-control-sm update-field">
+                                                            <option value="">Select</option>
+                                                            @foreach($regions as $region)
+                                                                <option value="{{ $region->region_id }}" data-column-id="{{ $patients->id }}" data-column-name="home_region" @if($patients->home_region == $region->region_id) selected @endif>{{ $region->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+            
+                                                    <div class="col-md-3">
+                                                        <label class="badge badge-secondary">Province:</label>
+                                                        <select id="province" name="home_province" class="form-control select2 form-control-sm update-field">
+                                                            <option value="">Select</option>
+                                                            @foreach($hprovinces as $province)
+                                                                <option value="{{ $province->province_id }}" data-column-id="{{ $patients->id }}" data-column-name="home_province" @if($patients->home_province == $province->province_id) selected @endif>{{ $province->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+            
+                                                    <div class="col-md-3">
+                                                        <label class="badge badge-secondary">City / Municipality:</label>
+                                                        <select id="city" name="home_city" class="form-control select2 form-control-sm update-field">
+                                                            <option value="">Select</option>
+                                                            @foreach($hcities as $city)
+                                                                <option value="{{ $city->city_id }}" data-column-id="{{ $patients->id }}" data-column-name="home_city" @if($patients->home_city == $city->city_id) selected @endif>{{ $city->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-3">
+                                                        <label class="badge badge-secondary">Barangay:</label>
+                                                        <select id="barangay" name="home_brgy" class="form-control select2 form-control-sm update-field">
+                                                            <option value="">Select</option>
+                                                            <option value="{{ $patients->home_brgy }}" data-column-id="{{ $patients->id }}" data-column-name="home_brgy" @if($patients->home_brgy == $hbarangays->id) selected @endif>{{ $hbarangays->name }}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>    
     
                                     <div class="form-group mtop">
                                         <div class="form-row">
@@ -134,10 +173,18 @@
                                                     <option value="Catholic" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Catholic") selected @endif>Catholic</option>
                                                     <option value="Baptist" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Baptist") selected @endif>Baptist</option>
                                                     <option value="Iglesia" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Iglesia") selected @endif>Iglesia ni Cristo</option>
-                                                    <option value="Islam" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Islam") selected @endif>Islam</option>
+                                                    <option value="Adventist" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Adventist") selected @endif>Adventist</option>
+                                                    <option value="Muslim" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Muslim") selected @endif>Muslim</option>
+                                                    <option value="Protestant" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Protestant") selected @endif>Protestant</option>
+                                                    <option value="Buddhist" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Buddhist") selected @endif>Buddhist</option>
+                                                    <option value="Hindu" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Hindu") selected @endif>Hindu</option>
+                                                    <option value="Jewish" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Jewish") selected @endif>Jewish</option>
+                                                    <option value="LDS (Mormon)" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "LDS (Mormon)") selected @endif>LDS (Mormon)</option>
+                                                    <option value="Aglipay" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Aglipay") selected @endif>Aglipay</option>
                                                     <option value="Other" data-column-id="{{ $patients->id }}" data-column-name="stud_religion" @if($patients->stud_religion == "Other") selected @endif>Other</option>
                                                 </select>
                                             </div>
+                                            
     
                                             <div class="col-md-3">
                                                 <label class="badge badge-secondary">Civil Status</label>
@@ -151,7 +198,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> 
     
                                     <div class="form-group mtop">
                                         <div class="form-row">
@@ -184,6 +231,55 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="form-group mtop">
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <div class="form-row mt-2">
+                                                    <div class="col-md-12">
+                                                        <span class="text-muted"><b>GUARDIAN ADDRESS</b></span><br>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="badge badge-secondary">Region:</label>
+                                                        <select id="region1" name="guardian_region" class="form-control select2 form-control-sm update-field">
+                                                            <option value="">Select</option>
+                                                            @foreach($regions as $region)
+                                                                <option value="{{ $region->region_id }}" data-column-id="{{ $patients->id }}" data-column-name="guardian_region" @if($patients->guardian_region == $region->region_id) selected @endif>{{ $region->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+            
+                                                    <div class="col-md-3">
+                                                        <label class="badge badge-secondary">Province:</label>
+                                                        <select id="province1" name="guardian_province" class="form-control select2 form-control-sm update-field">
+                                                            <option value="">Select</option>
+                                                            @foreach($gprovinces as $province)
+                                                                <option value="{{ $province->province_id }}" data-column-id="{{ $patients->id }}" data-column-name="guardian_province" @if($patients->guardian_province == $province->province_id) selected @endif>{{ $province->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-3">
+                                                        <label class="badge badge-secondary">City / Municipality:</label>
+                                                        <select id="city1" name="guardian_city" class="form-control select2 form-control-sm update-field">
+                                                            <option value="">Select</option>
+                                                            @foreach($gcities as $city)
+                                                                <option value="{{ $city->city_id }}" data-column-id="{{ $patients->id }}" data-column-name="guardian_city" @if($patients->guardian_city == $city->city_id) selected @endif>{{ $city->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-3">
+                                                        <label class="badge badge-secondary">Barangay:</label>
+                                                        <select id="barangay1" name="guardian_brgy" class="form-control select2 form-control-sm update-field">
+                                                            <option value="">Select</option>
+                                                            <option value="{{ $patients->guardian_brgy }}" data-column-id="{{ $patients->id }}" data-column-name="guardian_brgy" @if($patients->guardian_brgy == $gbarangays->id) selected @endif>{{ $gbarangays->name }}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>   
     
                                     <div class="form-group mtop">
                                         <div class="form-row">
@@ -203,27 +299,40 @@
                                             </div>
                                         </div>
                                     </div>
-    
-                                    <div class="form-group mtop mtop">
+
+                                    <div class="form-group mtop">
                                         <div class="form-row">
-                                            <div class="col-md-6">
-                                                <label class="badge badge-secondary">Address:</label>
-                                                <input type="text" name="guardian_add" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="guardian_add" value="{{ $patients->guardian_add }}" placeholder="Enter Parents/Guardian Address">
-                                            </div>
                                             <div class="col-md-2">
-                                                <label class="badge badge-secondary">Height:</label>
-                                                <input type="text" name="height" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="height" value="{{ $patients->height }}" placeholder="Enter Height">
+                                                <label class="badge badge-secondary lbel">Height (cm)</label><br>
+                                                <input type="text" name="height_cm" id="height_cm" value="{{ $patients->height_cm }}" data-column-id="{{ $patients->id }}" data-column-name="height_cm" class="form-control form-control-sm update-field" placeholder="N/A">
                                             </div>
+                                        
                                             <div class="col-md-2">
-                                                <label class="badge badge-secondary">Weight:</label>
-                                                <input type="text" name="weight" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="weight" value="{{ $patients->weight }}" placeholder="Enter Weight">
+                                                <label class="badge badge-secondary lbel">Height (ft)</label><br>
+                                                <input type="text" name="height_ft" id="height_ft" value="{{ $patients->height_ft }}" data-column-id="{{ $patients->id }}" data-column-name="height_ft" class="form-control form-control-sm update-field" placeholder="N/A">
                                             </div>
+                                        
+                                            <div class="col-md-2">
+                                                <label class="badge badge-secondary lbel">Weight (kg)</label><br>
+                                                <input type="text" name="weight_kg" id="weight_kg" value="{{ $patients->weight_kg }}" data-column-id="{{ $patients->id }}" data-column-name="weight_kg" class="form-control form-control-sm update-field" placeholder="N/A">
+                                            </div>
+                                        
+                                            <div class="col-md-2">
+                                                <label class="badge badge-secondary lbel">Weight (lb)</label><br>
+                                                <input type="text" name="weight_lb" id="weight_lb" value="{{ $patients->weight_lb }}" data-column-id="{{ $patients->id }}" data-column-name="weight_lb" class="form-control form-control-sm update-field" placeholder="N/A">
+                                            </div>
+                                        
                                             <div class="col-md-2">
                                                 <label class="badge badge-secondary">BMI:</label>
-                                                <input type="text" name="bmi" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="bmi" value="{{ $patients->bmi }}" placeholder="Enter BMI">
+                                                <input type="text" name="bmi" id="bmi" value="{{ $patients->bmi }}" data-column-id="{{ $patients->id }}" data-column-name="bmi" class="form-control form-control-sm" placeholder="N/A" readonly>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label class="badge badge-secondary">BMI Category:</label>
+                                                <input type="text" name="bami_cat" id="bmi_cat" class="form-control form-control-sm" readonly>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
 
                                     <div class="form-group mtop mtop">
                                         <div class="form-row">
@@ -373,29 +482,37 @@
                                     </div>
 
                                     <div class="form-row">
-                                        <div class="col-md-2">
-                                            <label class="badge badge-secondary">COVID-19 Vaccine</label>
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">Covid Vaccine</label>
                                             <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}"  data-array="0" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[0]) ? explode(',', $patients->immunization2)[0] : '' }}">
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label class="badge badge-secondary">1st Dose</label>
-                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}"  data-array="1" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[1]) ? explode(',', $patients->immunization2)[1] : '' }}">
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}"  data-array="1" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[1]) ? explode(',', $patients->immunization2)[1] : '' }}">
                                         </div>
-                                        <div class="col-md-2">
-                                            <label class="badge badge-secondary">2nd Dose</label>
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">Covid Vaccine</label>
                                             <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="2" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[2]) ? explode(',', $patients->immunization2)[2] : '' }}">
                                         </div>
-                                        <div class="col-md-2">
-                                            <label class="badge badge-secondary">Booster Dose</label>
-                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="3" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[3]) ? explode(',', $patients->immunization2)[3] : '' }}">
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">2nd Dose</label>
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="3" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[3]) ? explode(',', $patients->immunization2)[3] : '' }}">
                                         </div>
-                                        <div class="col-md-2">
-                                            <label class="badge badge-secondary">1st Dose</label>
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">Booster Dose</label>
                                             <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="4" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[4]) ? explode(',', $patients->immunization2)[4] : '' }}">
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">1st Dose</label>
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="5" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[5]) ? explode(',', $patients->immunization2)[5] : '' }}">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">Booster Dose</label>
+                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="6" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[6]) ? explode(',', $patients->immunization2)[6] : '' }}">
+                                        </div>
+                                        <div class="col-md-3">
                                             <label class="badge badge-secondary">2nd Dose</label>
-                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="5" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[5]) ? explode(',', $patients->immunization2)[5] : '' }}">
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="7" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[7]) ? explode(',', $patients->immunization2)[7] : '' }}">
                                         </div>
                                     </div>
 
@@ -462,7 +579,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label class="badge badge-secondary">LMP</label>
-                                            <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="lmp" value="{{ $patients->lmp }}" placeholder="">
+                                            <input type="date" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="lmp" value="{{ $patients->lmp }}" placeholder="">
                                         </div>
                                     </div>
                                 </div>

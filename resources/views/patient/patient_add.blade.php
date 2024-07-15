@@ -6,7 +6,7 @@
         margin-top: -15px;
     }
 </style>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
             <div class="card">
@@ -89,16 +89,49 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
 
                         <div class="form-group mtop">
                             <div class="form-row">
                                 <div class="col-md-12">
-                                    <label class="badge badge-secondary">Home Address:</label>
-                                    <input type="text" name="home_add" class="form-control form-control-sm" placeholder="Enter Home Address">
+                                    <div class="form-row mt-2">
+                                        <div class="col-md-12">
+                                            <span class="text-muted"><b>HOME ADDRESS</b></span><br>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">Region:</label>
+                                            <select id="region" name="home_region" class="form-control select2">
+                                                <option value="">Select</option>
+                                                @foreach($regions as $region)
+                                                    <option value="{{ $region->region_id }}">{{ $region->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">Province:</label>
+                                            <select id="province" name="home_province" class="form-control select2" disabled>
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">City / Municipality:</label>
+                                            <select id="city" name="home_city" class="form-control select2" disabled>
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">Barangay:</label>
+                                            <select id="barangay" name="home_brgy" class="form-control select2" disabled>
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>    
 
                         <div class="form-group mtop">
                             <div class="form-row">
@@ -107,7 +140,7 @@
                                     <input type="number" name="contact" class="form-control form-control-sm" placeholder="Enter Contact Number">
                                 </div>
 
-                                <div class="col-md-3">
+                               <div class="col-md-3">
                                     <label class="badge badge-secondary">Nationality:</label>
                                     <input type="text" name="stud_nation" class="form-control form-control-sm" placeholder="Enter Nationality">
                                 </div>
@@ -119,8 +152,15 @@
                                         <option value="Catholic">Catholic</option>
                                         <option value="Baptist">Baptist</option>
                                         <option value="Iglesia">Iglesia ni Cristo</option>
-                                        <option value="Islam">Islam</option>
+                                        <option value="Adventist">Adventist</option>
                                         <option value="Other">Other</option>
+                                        <option value="Muslim">Muslim</option>
+                                        <option value="Protestant">Protestant</option>
+                                        <option value="Buddhist">Buddhist</option>
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Jewish">Jewish</option>
+                                        <option value="LDS (Mormon)">LDS (Mormon)</option>
+                                        <option value="Aglipay">Aglipay</option>
                                     </select>
                                 </div>
 
@@ -134,11 +174,11 @@
                                         <option value="Widowed">Widowed</option>
                                         <option value="Separated">Separated</option>
                                     </select>
-                                </div>
+                                </div> 
                             </div>
                         </div>
 
-                        <div class="form-group mtop">
+                       <div class="form-group mtop">
                             <div class="form-row">
                                 <div class="col-md-4">
                                     <label class="badge badge-secondary">College/Department</label>
@@ -168,7 +208,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group mtop">
+                           <div class="form-group mtop">
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <label class="badge badge-secondary">Full Name of Parents/Guardian</label>
@@ -189,24 +229,79 @@
 
                         <div class="form-group mtop">
                             <div class="form-row">
-                                <div class="col-md-6">
-                                    <label class="badge badge-secondary">Address:</label>
-                                    <input type="text" name="guardian_add" class="form-control form-control-sm" placeholder="Enter Parents/Guardian Address">
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="badge badge-secondary">Height:</label>
-                                    <input type="text" name="height" class="form-control form-control-sm" placeholder="Enter Height">
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="badge badge-secondary">Weight:</label>
-                                    <input type="text" name="weight" class="form-control form-control-sm" placeholder="Enter Weight">
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="badge badge-secondary">BMI:</label>
-                                    <input type="text" name="bmi" class="form-control form-control-sm" placeholder="Enter BMI">
+                                <div class="col-md-12">
+                                    <div class="form-row mt-2">
+                                        <div class="col-md-12">
+                                            <span class="text-muted"><b>GUARDIAN ADDRESS</b></span><br>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">Region:</label>
+                                            <select id="region1" name="guardian_region" class="form-control select2">
+                                                <option value="">Select</option>
+                                                @foreach($regions as $region)
+                                                    <option value="{{ $region->region_id }}">{{ $region->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">Province:</label>
+                                            <select id="province1" name="guardian_province" class="form-control select2" disabled>
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">City / Municipality:</label>
+                                            <select id="city1" name="guardian_city" class="form-control select2" disabled>
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="col-md-3">
+                                            <label class="badge badge-secondary">Barangay:</label>
+                                            <select id="barangay1" name="guardian_brgy" class="form-control select2" disabled>
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>                        
+                        
+                        <div class="form-group mtop">
+                            <div class="form-row">
+                                <div class="col-md-2">
+                                    <label class="badge badge-secondary lbel">Height (cm)</label><br>
+                                    <input type="text" name="height_cm" id="height_cm" class="form-control form-control-sm" placeholder="N/A">
+                                </div>
+                            
+                                <div class="col-md-2">
+                                    <label class="badge badge-secondary lbel">Height (ft)</label><br>
+                                    <input type="text" name="height_ft" id="height_ft" class="form-control form-control-sm" placeholder="N/A">
+                                </div>
+                            
+                                <div class="col-md-2">
+                                    <label class="badge badge-secondary lbel">Weight (kg)</label><br>
+                                    <input type="text" name="weight_kg" id="weight_kg" class="form-control form-control-sm" placeholder="N/A">
+                                </div>
+                            
+                                <div class="col-md-2">
+                                    <label class="badge badge-secondary lbel">Weight (lb)</label><br>
+                                    <input type="text" name="weight_lb" id="weight_lb" class="form-control form-control-sm" placeholder="N/A">
+                                </div>
+                            
+                                <div class="col-md-2">
+                                    <label class="badge badge-secondary">BMI:</label>
+                                    <input type="text" name="bmi" id="bmi" class="form-control form-control-sm" placeholder="N/A" readonly>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label class="badge badge-secondary">BMI Category:</label>
+                                    <input type="text" name="bami_cat" id="bmi_cat" class="form-control form-control-sm" readonly>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="form-group mtop">
                             <div class="form-row">
@@ -248,5 +343,4 @@
         </div>
     </div>
 </div>
-
 @endsection
