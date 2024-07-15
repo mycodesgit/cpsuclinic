@@ -558,7 +558,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">SKIN</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[0]  == 1 || explode(',', $patients->findings_pexam)[1]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[0]  == 1 || explode(',', $patients->findings_pexam)[1]  == 1) ?  '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[0]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Discoloration</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[1]  == 1) ?  'checked' : '' }}></td>
@@ -566,7 +566,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[2]  == 1 || explode(',', $patients->findings_pexam)[3]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[2]  == 1 || explode(',', $patients->findings_pexam)[3]  == 1) ?  '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[2]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Lesion</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[3]  == 1) ?  'checked' : '' }}></td>
@@ -574,7 +574,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center">HEAD</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[4]  == 1 || explode(',', $patients->findings_pexam)[5]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[4]  == 1 || explode(',', $patients->findings_pexam)[5]  == 1) ?  '' : 'checked' }}></td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[4]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Deformity</td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[5]  == 1) ?  'checked' : '' }}></td>
@@ -583,7 +583,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">EYES</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[6]  == 1 || explode(',', $patients->findings_pexam)[7]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[6]  == 1 || explode(',', $patients->findings_pexam)[7]  == 1) ?  '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[6]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Deformity</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[7]  == 1) ?  'checked' : '' }}></td>
@@ -591,7 +591,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[8]  == 1 || explode(',', $patients->findings_pexam)[9]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[8]  == 1 || explode(',', $patients->findings_pexam)[9]  == 1) ?  '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[8]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Swelling</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[9]  == 1) ?  'checked' : '' }}></td>
@@ -599,7 +599,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">EARS</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[10]  == 1 || explode(',', $patients->findings_pexam)[11]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[10]  == 1 || explode(',', $patients->findings_pexam)[11]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[10]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Hearing Acuity</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[11]  == 1) ?  'checked' : '' }}></td>
@@ -607,7 +607,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[12]  == 1 || explode(',', $patients->findings_pexam)[13]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[12]  == 1 || explode(',', $patients->findings_pexam)[13]  == 1) ?  '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[12]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">R <span class="td-b1 text-center" style="display: inline-block; width: 30px;">  </span> L <span class="td-b1 text-center" style="display: inline-block; width: 30px;">  </span> </td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[13]  == 1) ?  'checked' : '' }}></td>
@@ -615,7 +615,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">NOSE</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[14]  == 1 || explode(',', $patients->findings_pexam)[15]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[14]  == 1 || explode(',', $patients->findings_pexam)[15]  == 1) ? '' : 'checked' }}></td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[14]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Deformity</td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[15]  == 1) ?  'checked' : '' }}></td>
@@ -623,7 +623,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[16]  == 1 || explode(',', $patients->findings_pexam)[17]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[16]  == 1 || explode(',', $patients->findings_pexam)[17]  == 1) ? '' : 'checked' }}></td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[16]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Bleeding</td>
                <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[17]  == 1) ?  'checked' : '' }}></td>
@@ -631,7 +631,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">MOUTH AND TONGUE</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[18]  == 1 || explode(',', $patients->findings_pexam)[19]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[18]  == 1 || explode(',', $patients->findings_pexam)[19]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[18]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Inflamation</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[19]  == 1) ?  'checked' : '' }}></td>
@@ -639,7 +639,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[20]  == 1 || explode(',', $patients->findings_pexam)[21]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[20]  == 1 || explode(',', $patients->findings_pexam)[21]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[20]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Tongue Deviation</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[21]  == 1) ?  'checked' : '' }}></td>
@@ -647,7 +647,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">NECK & LYMPH NODES</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[22]  == 1 || explode(',', $patients->findings_pexam)[23]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[22]  == 1 || explode(',', $patients->findings_pexam)[23]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[22]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Rigidity</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[23]  == 1) ?  'checked' : '' }}></td>
@@ -655,7 +655,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[24]  == 1 || explode(',', $patients->findings_pexam)[25]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[24]  == 1 || explode(',', $patients->findings_pexam)[25]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[24]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Mass/Swelling</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[25]  == 1) ?  'checked' : '' }}></td>
@@ -663,7 +663,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">HEART</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[26]  == 1 || explode(',', $patients->findings_pexam)[27]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[26]  == 1 || explode(',', $patients->findings_pexam)[27]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[26]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Tachucardia</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[27]  == 1) ?  'checked' : '' }}></td>
@@ -671,7 +671,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[28]  == 1 || explode(',', $patients->findings_pexam)[29]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[28]  == 1 || explode(',', $patients->findings_pexam)[29]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[28]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Bradycardia</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[29]  == 1) ?  'checked' : '' }}></td>
@@ -679,7 +679,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">CHEST</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[30]  == 1 || explode(',', $patients->findings_pexam)[31]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[30]  == 1 || explode(',', $patients->findings_pexam)[31]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[30]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Tenderness</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[31]  == 1) ?  'checked' : '' }}></td>
@@ -687,7 +687,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[32]  == 1 || explode(',', $patients->findings_pexam)[33]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[32]  == 1 || explode(',', $patients->findings_pexam)[33]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[32]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Bulges</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[33]  == 1) ?  'checked' : '' }}></td>
@@ -695,7 +695,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">LUNGS</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[34]  == 1 || explode(',', $patients->findings_pexam)[35]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[34]  == 1 || explode(',', $patients->findings_pexam)[35]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[34]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Wheezing</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[35]  == 1) ?  'checked' : '' }}></td>
@@ -703,7 +703,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[36]  == 1 || explode(',', $patients->findings_pexam)[37]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[36]  == 1 || explode(',', $patients->findings_pexam)[37]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[36]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Rales</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[37]  == 1) ?  'checked' : '' }}></td>
@@ -711,7 +711,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">BREAST & AXILLA</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[38]  == 1 || explode(',', $patients->findings_pexam)[39]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[38]  == 1 || explode(',', $patients->findings_pexam)[39]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[38]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Dimpling</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[39]  == 1) ?  'checked' : '' }}></td>
@@ -719,7 +719,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[40]  == 1 || explode(',', $patients->findings_pexam)[41]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[40]  == 1 || explode(',', $patients->findings_pexam)[41]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[40]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Enlarge lymph Nodes</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[41]  == 1) ?  'checked' : '' }}></td>
@@ -727,7 +727,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">ABDOMEN</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[42]  == 1 || explode(',', $patients->findings_pexam)[43]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[42]  == 1 || explode(',', $patients->findings_pexam)[43]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[42]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Striae</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[43]  == 1) ?  'checked' : '' }}></td>
@@ -735,7 +735,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[44]  == 1 || explode(',', $patients->findings_pexam)[45]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[44]  == 1 || explode(',', $patients->findings_pexam)[45]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[44]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Tenderness</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[45]  == 1) ?  'checked' : '' }}></td>
@@ -743,7 +743,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">BACK & SHOULDERS</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[46]  == 1 || explode(',', $patients->findings_pexam)[47]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[46]  == 1 || explode(',', $patients->findings_pexam)[47]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[46]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Lordosis</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[47]  == 1) ?  'checked' : '' }}></td>
@@ -751,7 +751,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[48]  == 1 || explode(',', $patients->findings_pexam)[49]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[48]  == 1 || explode(',', $patients->findings_pexam)[49]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[48]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Kyphosis</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[49]  == 1) ?  'checked' : '' }}></td>
@@ -759,7 +759,7 @@
             </tr>
             <tr>
                 <th class="bordered text-center" rowspan="2">EXTRMITES</th>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[50]  == 1 || explode(',', $patients->findings_pexam)[51]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[50]  == 1 || explode(',', $patients->findings_pexam)[51]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[50]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Deformity</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[51]  == 1) ?  'checked' : '' }}></td>
@@ -767,7 +767,7 @@
                 <td class="bordered text-center" rowspan="2"></td>
             </tr>
             <tr>
-                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[52]  == 1 || explode(',', $patients->findings_pexam)[53]  == 1) ?  'checked' : '' }}></td>
+                <td class="bordered text-center"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[52]  == 1 || explode(',', $patients->findings_pexam)[53]  == 1) ? '' : 'checked' }}></td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[52]  == 1) ?  'checked' : '' }}></td>
                 <td class="bordered text-center">Clubbing of nails</td>
                 <td class="bordered text-center" width="15"><input type="checkbox" data-chk="chk" {{ (explode(',', $patients->findings_pexam)[53]  == 1) ?  'checked' : '' }}></td>
