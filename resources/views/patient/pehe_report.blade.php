@@ -521,12 +521,12 @@
         <tr>
             <td class="text-center" width="180"><span class="td-b1 text-center" style="display: inline-block; width: 100%;">{{ strtoupper($patients->fname) }} {{ strtoupper($patients->lname) }} {{ strtoupper($patients->ext_name) }} {{ strtoupper($patients->mname) }}</span><b>Student's Signature</td>
             <td class="text-center" width="180"></td>
-            <td class="text-center" width=""><span class="td-b1 text-center" style="display: inline-block; width: 100%;">{{ \Carbon\Carbon::parse($patients->created_at)->format('F j, Y') }}</span><b><span style="color: white;">..........</span>Date<span style="color: white;">..........</span></td>
+            <td class="text-center" width=""><span class="td-b1 text-center" style="display: inline-block; width: 100%;">{{ \Carbon\Carbon::parse($patients->createdas)->format('F j, Y') }}</span><b><span style="color: white;">..........</span>Date<span style="color: white;">..........</span></td>
         </tr>
     </table>
-    <table class="table" spellcheck="margin-top: 0px;">
+    <table class="table" spellcheck="margin-top: -10px;">
         <tr>
-            <td class="text-center" style="font-size: 12px;"><br><br><br>Documnet Control Code: CPSU-F-MDHU-01 Effective Date: 09/12/20218 Page No.: 1 of 2</td>
+            <td class="text-center" style="font-size: 10px;"><br><br><br>Document Control Code: CPSU-F-MDHU-01 Effective Date: 09/12/20218 Page No.: 1 of 2</td>
         </tr>
     </table>
     <table class="table" style="font-size: 15px;">
@@ -796,9 +796,9 @@
             </tr>
         </tbody>
     </table>
-    <table class="table" style="margin-top: 110px;">
+    <table class="table" style="margin-top: 90px;">
         <tr>
-            <td class="text-center" style="font-size: 12px;"><br><br><br>Documnet Control Code: CPSU-F-MDHU-01 Effective Date: 09/12/20218 Page No.: 2 of 2</td>
+            <td class="text-center" style="font-size: 12px;"><br><br><br>Document Control Code: CPSU-F-MDHU-01 Effective Date: 09/12/20218 Page No.: 2 of 2</td>
         </tr>
     </table>
 </body>

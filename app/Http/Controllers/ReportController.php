@@ -21,8 +21,10 @@ class ReportController extends Controller
     public function peheReport($id)
     {
         $patients = Patients::join('college', 'patients.studCollege', '=', 'college.college_abbr')
-                    ->where('patients.id', $id)
-                    ->first();
+        ->where('patients.id', $id)
+        ->select('patients.*', 'patients.created_at as createdas')
+        ->first();
+
         
         $hregion = Region::find($patients->home_region);
         $hprovince = Province::where('province_id', $patients->home_province)->first();
